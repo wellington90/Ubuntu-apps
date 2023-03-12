@@ -4,52 +4,96 @@
   become: true
   vars:
     packages:
-      - google-chrome-stable
-      - code
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
       - telegram-desktop
       - vlc
-
-
   tasks:
-    - name: Adicionar chaves do repositório Docker
-      apt_key:
+
+   - name: Install apt-transport-https
+     ansible.builtin.apt:
+        state: latest
+        update_cache: true
+
+   - name: Add Apt google-chrome signing key
+     ansible.builtin.apt_key:
+        url: "https://dl.google.com/linux/linux_signing_key.pub"
+        state: present
+
+   - name: Add repository google-chrome into sources list
+     ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+        state: present
+        filename: google-chrome
+
+   - name: Install google-chrome-stable
+     ansible.builtin.apt:
+        name: "google-chrome-stable"
+        state: latest
+        update_cache: true
+      
+   - name: Instalar dependências do Docker
+     apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+
+   - name: Adicionar chave GPG do Docker
+     apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Adicionar repositório do Docker
-      apt_repository:
+   - name: Adicionar repositório do Docker
+     apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
         state: present
 
-    - name: Instalar Kind
-      shell: curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.12.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
-
-    - name: Instalar kubectl
-      shell: curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-
-
-    - name: Instalar Iriun Webcam
-      get_url:
-        url: https://iriun.gitlab.io/iriunwebcam-2.8.deb
-        dest: /tmp/iriunwebcam-2.8.deb
-      become: true
-
-    - name: Instalar pacote deb do Iriun Webcam
-      apt:
-        deb: /tmp/iriunwebcam-2.8.deb
+   - name: Instalar Docker
+     apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
         state: present
-      become: true
 
+   - name: Add user to docker group
+     shell: sudo usermod -aG docker ${USER}
 
-    - name: Atualizar cache de pacotes
-      apt:
-        update_cache: yes
+   - name: Instalar Iriun Webcam
+     get_url:
+       url: https://iriun.gitlab.io/iriunwebcam-2.8.deb
+       dest: /tmp/iriunwebcam-2.8.deb
+     become: true
 
-    - name: Instalar pacotes
-      apt:
-        name: "{{ packages }}"
-        state: present
+   - name: Instalar pacote deb do Iriun Webcam
+     apt:
+       deb: /tmp/iriunwebcam-2.8.deb
+       state: present
+     become: true
+
+   - name: Import Microsoft GPG key
+     apt_key:
+       url: https://packages.microsoft.com/keys/microsoft.asc
+       state: present
+
+   - name: Add Visual Studio Code repository
+     apt_repository:
+       repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+       state: present
+
+   - name: Install Visual Studio Code
+     apt:
+       name: code
+       state: latest
+
+   - name: Atualizar cache de pacotes
+     apt:
+       update_cache: yes
+
+   - name: Instalar pacotes
+     apt:
+       name: "{{ packages }}"
+       state: present
 
