@@ -1,0 +1,55 @@
+---
+- name: Instalar softwares
+  hosts: localhost
+  become: true
+  vars:
+    packages:
+      - google-chrome-stable
+      - code
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - telegram-desktop
+      - vlc
+
+
+  tasks:
+    - name: Adicionar chaves do repositório Docker
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Adicionar repositório do Docker
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Instalar Kind
+      shell: curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.12.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
+
+    - name: Instalar kubectl
+      shell: curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+
+
+    - name: Instalar Iriun Webcam
+      get_url:
+        url: https://iriun.gitlab.io/iriunwebcam-2.8.deb
+        dest: /tmp/iriunwebcam-2.8.deb
+      become: true
+
+    - name: Instalar pacote deb do Iriun Webcam
+      apt:
+        deb: /tmp/iriunwebcam-2.8.deb
+        state: present
+      become: true
+
+
+    - name: Atualizar cache de pacotes
+      apt:
+        update_cache: yes
+
+    - name: Instalar pacotes
+      apt:
+        name: "{{ packages }}"
+        state: present
+
