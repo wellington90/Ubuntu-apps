@@ -6,6 +6,8 @@
     packages:
       - telegram-desktop
       - vlc
+
+    
   tasks:
 
    - name: Install apt-transport-https
@@ -61,6 +63,9 @@
    - name: Add user to docker group
      shell: sudo usermod -aG docker ${USER}
 
+   - name: Install Kind
+     shell: curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
+
    - name: Instalar Iriun Webcam
      get_url:
        url: https://iriun.gitlab.io/iriunwebcam-2.8.deb
@@ -96,4 +101,3 @@
      apt:
        name: "{{ packages }}"
        state: present
-
