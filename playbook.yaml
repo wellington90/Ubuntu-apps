@@ -10,8 +10,7 @@
     packages:
       - telegram-desktop
       - vlc
-
-    
+   
   tasks:
    - name: Install apt-transport-https
      ansible.builtin.apt:
@@ -74,6 +73,7 @@
         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
+        
    - name: Instalar Iriun Webcam
      get_url:
        url: https://iriun.gitlab.io/iriunwebcam-2.8.deb
@@ -118,12 +118,12 @@
 
    - name: Instalar a AWS CLI
      command: "/tmp/aws/install --update"
- 
-   - name: Atualizar cache de pacotes
-     apt:
-       update_cache: yes
 
    - name: Instalar pacotes
      apt:
        name: "{{ packages }}"
        state: present
+ 
+   - name: Atualizar cache de pacotes
+     apt:
+       update_cache: yes
