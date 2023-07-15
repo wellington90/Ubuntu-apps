@@ -61,31 +61,42 @@
           - docker-ce
           - docker-ce-cli
           - containerd.io
+          - docker-compose
         state: present
 
    - name: Add user to docker group
      shell: sudo usermod -aG docker ${USER}
+     become: true
 
    - name: To apply the new group membership,
      shell: su - ${USER}
+     become: true
+
+
 
    - name: Install Kind
      shell: curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
+     become: true
 
    - name: Install kubectl
      shell: |
         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
+     become: true
 
    - name: Baixar e configurar a chave GPG da HashiCorp
      ansible.builtin.shell: "wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg"
      changed_when: False
+     become: true
+
 
    - name: Adicionar o repositório HashiCorp apt
      ansible.builtin.apt_repository:
         repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
         state: present
+        become: true
+
 
    - name: Atualizar apt cache
      ansible.builtin.apt:
@@ -95,6 +106,8 @@
      ansible.builtin.apt:
         name: terraform
         state: present
+        become: true
+
 
    - name: Instalar Iriun Webcam
      get_url:
@@ -110,6 +123,7 @@
 
    - name: Instalar o DBeaver CE
      shell: sudo snap install dbeaver-ce  
+     become: true
 
    - name: Import Microsoft GPG key
      apt_key:
@@ -152,3 +166,5 @@
    - name: Atualizar cache de pacotes
      apt:
        update_cache: yes
+
+
