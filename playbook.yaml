@@ -1,42 +1,16 @@
 ---
-- name: Instalar softwares
+- name: Install Software Packages
   hosts: localhost
   become: true
   vars:
     keyring_file: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
     apt_source: "https://apt.releases.hashicorp.com"
     apt_repo: "{{ apt_source }} {{ ansible_distribution_release }} main"
-    
-    packages:
-      - telegram-desktop
-      - vlc
-
-
-  tasks:
-   - name: Install apt-transport-https
-     ansible.builtin.apt:
-        state: latest
-        update_cache: true
-
-   - name: Add Apt google-chrome signing key
-     ansible.builtin.apt_key:
-        url: "https://dl.google.com/linux/linux_signing_key.pub"
-        state: present
-
-   - name: Add repository google-chrome into sources list
-     ansible.builtin.apt_repository:
-        repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-        state: present
-        filename: google-chrome
-
-   - name: Install google-chrome-stable
-     ansible.builtin.apt:
-        name: "google-chrome-stable"
-        state: latest
-        update_cache: true
+   
       
-   - name: Instalar dependências do Docker
-     apt:
+  tasks:
+    - name: Install required dependencies
+      apt:
         name:
           - apt-transport-https
           - ca-certificates
@@ -45,18 +19,36 @@
           - lsb-release
         state: present
 
-   - name: Adicionar chave GPG do Docker
-     apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
+    - name: Change Ubuntu package repository
+      lineinfile:
+        dest: /etc/apt/sources.list
+        regexp: '^deb http://br.archive.ubuntu.com'
+        line: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} main'
+      become: true
+
+
+    - name: Install Docker dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
         state: present
 
-   - name: Adicionar repositório do Docker
-     apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    - name: Add Docker GPG key
+      apt_key:
+        url: "https://download.docker.com/linux/ubuntu/gpg"
         state: present
 
-   - name: Instalar Docker
-     apt:
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+        state: present
+
+    - name: Install Docker packages
+      apt:
         name:
           - docker-ce
           - docker-ce-cli
@@ -64,107 +56,97 @@
           - docker-compose
         state: present
 
-   - name: Add user to docker group
-     shell: sudo usermod -aG docker ${USER}
-     become: true
+    - name: Add user to docker group
+      user:
+        name: "w3ll1n9t0n"
+        append: yes
+        groups: docker
+        state: present
+  
 
-   - name: To apply the new group membership,
-     shell: su - ${USER}
-     become: true
+    - name: Install Kind
+      shell: >
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 &&
+        chmod +x ./kind &&
+        sudo mv ./kind /usr/local/bin/kind
 
-
-
-   - name: Install Kind
-     shell: curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
-     become: true
-
-   - name: Install kubectl
-     shell: |
-        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-        chmod +x kubectl
+    - name: Install kubectl
+      shell: >
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" &&
+        chmod +x kubectl &&
         sudo mv kubectl /usr/local/bin/
-     become: true
 
-   - name: Baixar e configurar a chave GPG da HashiCorp
-     ansible.builtin.shell: "wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg"
-     changed_when: False
-     become: true
+    - name: Download and configure HashiCorp GPG key
+      shell: >
+        wget -O- https://apt.releases.hashicorp.com/gpg |
+        gpg --dearmor |
+        sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      changed_when: False
 
-
-   - name: Adicionar o repositório HashiCorp apt
-     ansible.builtin.apt_repository:
+    - name: Add HashiCorp repository
+      apt_repository:
         repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
         state: present
-        become: true
 
-
-   - name: Atualizar apt cache
-     ansible.builtin.apt:
-       update_cache: yes
-
-   - name: Instalar o Terraform
-     ansible.builtin.apt:
+    - name: Install Terraform
+      apt:
         name: terraform
         state: present
-        become: true
 
+    - name: Download Iriun Webcam package
+      get_url:
+        url: "https://iriun.gitlab.io/iriunwebcam-2.8.deb"
+        dest: "/tmp/iriunwebcam-2.8.deb"
 
-   - name: Instalar Iriun Webcam
-     get_url:
-       url: https://iriun.gitlab.io/iriunwebcam-2.8.deb
-       dest: /tmp/iriunwebcam-2.8.deb
-     become: true
+    - name: Install Iriun Webcam package
+      apt:
+        deb: /tmp/iriunwebcam-2.8.deb
+        state: present
 
-   - name: Instalar pacote deb do Iriun Webcam
-     apt:
-       deb: /tmp/iriunwebcam-2.8.deb
-       state: present
-     become: true
+    - name: Install DBeaver CE
+      snap:
+        name: dbeaver-ce
+        classic: yes
 
-   - name: Instalar o DBeaver CE
-     shell: sudo snap install dbeaver-ce  
-     become: true
+    - name: Import Microsoft GPG key
+      apt_key:
+        url: "https://packages.microsoft.com/keys/microsoft.asc"
+        state: present
 
-   - name: Import Microsoft GPG key
-     apt_key:
-       url: https://packages.microsoft.com/keys/microsoft.asc
-       state: present
+    - name: Add Visual Studio Code repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+        state: present
 
-   - name: Add Visual Studio Code repository
-     apt_repository:
-       repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
-       state: present
+    - name: Install Visual Studio Code
+      apt:
+        name: code
+        state: latest
 
-   - name: Install Visual Studio Code
-     apt:
-       name: code
-       state: latest
-
-   - name: Install python3-pip package
-     apt:
+    - name: Install python3-pip package
+      apt:
         name: python3-pip
         state: present
-        
-   - name: Download do arquivo da AWS CLI
-     get_url:
+
+    - name: Download AWS CLI package
+      get_url:
         url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
         dest: "/tmp/awscliv2.zip"
 
-   - name: Descompactar o arquivo
-     unarchive:
+    - name: Unarchive AWS CLI package
+      unarchive:
         src: "/tmp/awscliv2.zip"
         dest: "/tmp"
 
-   - name: Instalar a AWS CLI
-     command: "/tmp/aws/install --update"
+    - name: Install AWS CLI
+      command: "/tmp/aws/install --update"
 
-   - name: Instalar pacotes
-     apt:
-       name: "{{ packages }}"
-       state: present
+    - name: Install software telegram using snap
+      command: snap install telegram-desktop 
 
-   - name: Atualizar cache de pacotes
-     apt:
-       update_cache: yes
+    - name: Install software vlc using snap
+      command: snap install vlc
 
-
+    - name: Update package cache
+      apt:
+        update_cache: yes
