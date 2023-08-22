@@ -80,6 +80,9 @@ unzip -q /tmp/awscliv2.zip -d /tmp
 # Install AWS CLI
 sudo /tmp/aws/install --update
 
+# Install Python venv
+sudo apt-get install -y python3-venv
+
 # Install Git
 sudo apt-get install -y git
 
