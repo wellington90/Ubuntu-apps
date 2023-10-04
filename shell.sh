@@ -4,6 +4,8 @@
 #sam cli
 #teamviwer
 #kustomizer
+#Ansible
+#Docker Compose
 
 # Install required dependencies
 sudo apt-get update
