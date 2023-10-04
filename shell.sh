@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#gitclone
+#sam cli
+#teamviwer
+#kustomizer
+
 # Install required dependencies
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
