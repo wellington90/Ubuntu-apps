@@ -2,8 +2,8 @@
 
 #sam cli
 #teamviwer
+#ansible
 #kustomizer
-#Ansible
 #Docker Compose
 
 # Install required dependencies
