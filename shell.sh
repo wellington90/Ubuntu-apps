@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#sam cli
-#teamviwer
-#ansible
-#kustomizer
-#Docker Compose
-
 # Install required dependencies
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
@@ -86,11 +80,26 @@ unzip -q /tmp/awscliv2.zip -d /tmp
 # Install AWS CLI
 sudo /tmp/aws/install --update
 
+# Download Sam cli
+wget -O /tmp/aws-sam-cli-linux-x86_64.zip https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+
+# Unarchive AWS CLI package
+unzip -q /tmp/aws-sam-cli-linux-x86_64.zip --d sam-installation
+
+# Install AWS Sam CLI
+sudo ./tmp/sam-installation/install
+
 # Install Python venv
 sudo apt-get install -y python3-venv
 
 # Install Git
 sudo apt-get install -y git
+
+# Install ansible 
+sudo apt-get install ansible -y
+
+# install Kustomize
+sudo snap install kustomize
 
 # Install software telegram using snap
 sudo snap install telegram-desktop
@@ -98,5 +107,11 @@ sudo snap install telegram-desktop
 # Install software vlc using snap
 sudo snap install vlc
 
-# Update package cache
-sudo apt-get update
+# Install teamviwer
+cd /tmp wget https://download.teamviewer.com/download/linux/signature/TeamViewer2017.asc
+sudo apt-key add TeamViewer2017.asc
+sudo sh -c 'echo "deb http://linux.teamviewer.com/deb stable main" >> /etc/apt/sources.list.d/teamviewer.list'
+sudo sh -c 'echo "deb http://linux.teamviewer.com/deb preview main" >> /etc/apt/sources.list.d/teamviewer.list'
+sudo apt update && sudo apt upgrade -y
+sudo apt install teamviewer -y
+
