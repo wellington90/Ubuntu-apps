@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#sudo apt-get install gparted
+
 # Function to display the menu
 display_menu() {
     clear
