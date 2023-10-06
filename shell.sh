@@ -12,7 +12,7 @@ display_menu() {
     echo "6. DBeaver CE"
     echo "7. Visual Studio Code"
     echo "8. AWS CLI and AWS Sam CLI"
-    echo "9. Python venv"
+    echo "9. Python venv - pip"
     echo "10. Git"
     echo "11. Ansible"
     echo "12. Kustomize"
