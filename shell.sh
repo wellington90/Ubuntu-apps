@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#gitclone
 #sam cli
 #teamviwer
 #kustomizer
