@@ -1,14 +1,5 @@
 #!/bin/bash
 
-#sudo apt-get install gparted
-
-#python 3.10~
-
-#sudo apt install git p7zip-full python3-pip python3-wxgtk4.0 grub2-common grub-pc-bin parted dosfstools ntfs-3g
-#sudo pip3 install WoeUSB-ng
-
-#pycharm
-
 #-------------------------------------------------------
 
 # Function to display the menu
@@ -29,8 +20,10 @@ display_menu() {
     echo "12. Kustomize"
     echo "13. Telegram Desktop"
     echo "14. VLC"
-    echo "15. TeamViewer"
-    echo "16. Install All Applications"
+    echo "15. Gparted"
+    echo "16. Pycharm-community"
+    echo "17. Slack"
+    echo "18. Install All Applications"
     echo "0. Exit"
 }
 
@@ -187,17 +180,28 @@ install_vlc() {
 
 }
 
-# Function to install TeamViewer
-install_teamviewer() {
+# Function to install Gparted
+install_gparted() {
     
     # Install teamviwer
-    cd /tmp wget https://download.teamviewer.com/download/linux/signature/TeamViewer2017.asc
-    sudo apt-key add TeamViewer2017.asc
-    sudo sh -c 'echo "deb http://linux.teamviewer.com/deb stable main" >> /etc/apt/sources.list.d/teamviewer.list'
-    sudo sh -c 'echo "deb http://linux.teamviewer.com/deb preview main" >> /etc/apt/sources.list.d/teamviewer.list'
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install teamviewer -y
+    sudo apt-get install gparted -y
+
 }
+
+# Function to install Pycharm
+install_pycharm-community() {
+    
+    # Install teamviwer
+    sudo snap install pycharm-community --classic 
+}
+
+# Function to install Pycharm
+install_slack() {
+    
+    # Install teamviwer
+    sudo snap install slack --classic 
+}
+
 
 # Function to install all applications
 install_all_applications() {
@@ -215,7 +219,9 @@ install_all_applications() {
     install_kustomize
     install_telegram_desktop
     install_vlc
-    install_teamviewer
+    install_gparted
+    install_pycharm-community
+    install_slack
 }
 
 # Main script
@@ -238,8 +244,11 @@ while true; do
         12) install_kustomize ;;
         13) install_telegram_desktop ;;
         14) install_vlc ;;
-        15) install_teamviewer ;;
-        16) install_all_applications ;;
+        15) install_gparted ;;
+        16) install_pycharm-community ;;
+        17) install_slack ;;
+        18) install_all_applications ;;
+        
         0) exit ;;
         *) echo "Invalid choice. Please enter a valid option." ;;
     esac
