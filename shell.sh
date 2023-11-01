@@ -23,14 +23,15 @@ display_menu() {
     echo "15. Gparted"
     echo "16. Pycharm-community"
     echo "17. Slack"
-    echo "18. Install All Applications"
+    echo "18. Helm"
+    echo "19. Install All Applications"
     echo "0. Exit"
 }
 
 # Function to install Google Chrome
 install_google_chrome() {
     
-    sudo apt-get update
+    sudo apt-get update && sudo apt-get upgrade -y
     sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
     sudo sed -i 's/^deb http:\/\/br.archive.ubuntu.com/deb http:\/\/archive.ubuntu.com/g' /etc/apt/sources.list
@@ -54,7 +55,7 @@ install_docker() {
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 
     # Install Docker packages
-    sudo apt-get update
+    sudo apt-get update && sudo apt-get upgrade -y
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     # Add user to docker group
@@ -202,6 +203,11 @@ install_slack() {
     sudo snap install slack --classic 
 }
 
+# Function to install Helm
+install_helm() {
+    sudo snap install helm --classic
+}
+
 
 # Function to install all applications
 install_all_applications() {
@@ -222,6 +228,7 @@ install_all_applications() {
     install_gparted
     install_pycharm-community
     install_slack
+    install_helm
 }
 
 # Main script
@@ -247,8 +254,8 @@ while true; do
         15) install_gparted ;;
         16) install_pycharm-community ;;
         17) install_slack ;;
-        18) install_all_applications ;;
-        
+        18) install_helm ;;
+        19) install_all_applications ;;
         0) exit ;;
         *) echo "Invalid choice. Please enter a valid option." ;;
     esac
