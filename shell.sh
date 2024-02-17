@@ -177,14 +177,14 @@ install_telegram_desktop() {
 # Function to install VLC
 install_vlc() {
     # Install software vlc using snap
-    sudo snap install vlc
+    sudo apt-get install vlc
 
 }
 
 # Function to install Gparted
 install_gparted() {
     
-    # Install teamviwer
+    # Install Gparted
     sudo apt-get install gparted -y
 
 }
@@ -192,20 +192,22 @@ install_gparted() {
 # Function to install Pycharm
 install_pycharm-community() {
     
-    # Install teamviwer
+    # Install Pycharm
     sudo snap install pycharm-community --classic 
 }
 
-# Function to install Pycharm
+# Function to install slack
 install_slack() {
     
-    # Install teamviwer
+    # Install slack
     sudo snap install slack --classic 
 }
 
 # Function to install Helm
 install_helm() {
     sudo snap install helm --classic
+
+    sudo apt-get update && sudo apt-get upgrade -y
 }
 
 
