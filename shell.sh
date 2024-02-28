@@ -24,7 +24,8 @@ display_menu() {
     echo "16. Pycharm-community"
     echo "17. Slack"
     echo "18. Helm"
-    echo "19. Install All Applications"
+    echo "19. Postman"
+    echo "20. Install All Applications"
     echo "0. Exit"
 }
 
@@ -32,6 +33,9 @@ display_menu() {
 install_google_chrome() {
     
     sudo apt-get update && sudo apt-get upgrade -y
+    sudo apt install snapd -y
+    #-------------------------------------------------
+  
     sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
     sudo sed -i 's/^deb http:\/\/br.archive.ubuntu.com/deb http:\/\/archive.ubuntu.com/g' /etc/apt/sources.list
@@ -207,8 +211,20 @@ install_slack() {
 install_helm() {
     sudo snap install helm --classic
 
-    sudo apt-get update && sudo apt-get upgrade -y
+    
 }
+
+# Function to install postman
+install_postman() {
+    sudo snap install postman
+
+    sudo nano /usr/share/applications/Postman.desktop
+
+    sudo apt-get update && sudo apt-get upgrade -y
+
+    sudo reboot
+}
+
 
 
 # Function to install all applications
@@ -231,6 +247,7 @@ install_all_applications() {
     install_pycharm-community
     install_slack
     install_helm
+    install_postman
 }
 
 # Main script
@@ -257,12 +274,11 @@ while true; do
         16) install_pycharm-community ;;
         17) install_slack ;;
         18) install_helm ;;
-        19) install_all_applications ;;
+        19) install_postman ;;
+        20) install_all_applications ;;
         0) exit ;;
         *) echo "Invalid choice. Please enter a valid option." ;;
     esac
 
     read -p "Press Enter to continue..."
 done
-
-
