@@ -21,7 +21,7 @@ display_menu() {
     echo "13. Telegram Desktop"
     echo "14. VLC"
     echo "15. Gparted"
-    echo "16. Pycharm-community"
+    echo "16. "
     echo "17. Slack"
     echo "18. Helm"
     echo "19. Postman"
@@ -60,6 +60,7 @@ install_docker() {
 
     # Install Docker packages
     sudo apt-get update && sudo apt-get upgrade -y
+    sudo apt  install docker-compose -y
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     # Add user to docker group
@@ -194,11 +195,11 @@ install_gparted() {
 }
 
 # Function to install Pycharm
-install_pycharm-community() {
+#install_pycharm-community() {
     
     # Install Pycharm
-    sudo snap install pycharm-community --classic 
-}
+#    sudo snap install pycharm-community --classic 
+#}
 
 # Function to install slack
 install_slack() {
@@ -244,7 +245,7 @@ install_all_applications() {
     install_telegram_desktop
     install_vlc
     install_gparted
-    install_pycharm-community
+    #install_pycharm-community
     install_slack
     install_helm
     install_postman
@@ -271,7 +272,7 @@ while true; do
         13) install_telegram_desktop ;;
         14) install_vlc ;;
         15) install_gparted ;;
-        16) install_pycharm-community ;;
+        #16) install_pycharm-community ;;
         17) install_slack ;;
         18) install_helm ;;
         19) install_postman ;;
