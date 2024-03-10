@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+#sudo apt install libtesseract-dev
+#sudo apt install libtesseract-dev
+
+
 #-------------------------------------------------------
 
 # Function to display the menu
