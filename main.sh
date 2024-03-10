@@ -7,9 +7,10 @@ if [ -z "$last_image" ]; then
     echo "Nenhuma imagem encontrada na pasta."
     exit 1
 fi
-echo ""
-echo ""
 echo "$last_image"
+echo ""
 
-# Executa o Tesseract com a última imagem encontrada e os idiomas inglês e alemão
-tesseract "$last_image" stdout -l eng+deu
+# Remove mensagens indesejadas antes de passar para o Tesseract
+filtered_text=$(tesseract "$last_image" stdout 2>/dev/null | grep -Ev 'Screenshot from|Estimating resolution')
+
+echo "$filtered_text"
