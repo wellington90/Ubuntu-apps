@@ -65,9 +65,8 @@ install_docker() {
 
     # Install Docker packages
     sudo apt-get update && sudo apt-get upgrade -y
-    sudo apt  install docker-compose -y
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
+    sudo apt  install docker-compose -y
     # Add user to docker group
     sudo usermod -aG docker w3ll1n9t0n
 
