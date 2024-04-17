@@ -209,7 +209,6 @@ install_ventory() {
     # Install software vlc using snap
     sudo wget https://github.com/ventoy/Ventoy/releases/download/v1.0.97/ventoy-1.0.97-linux.tar.gz
     tar xzf ventoy-1.0.97-linux.tar.gz
-    sudo rm -rf ventoy-1.0.97-linux.tar.gz
 }
 
 
