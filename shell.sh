@@ -26,7 +26,7 @@ display_menu() {
     echo "13. Telegram Desktop"
     echo "14. VLC"
     echo "15. Gparted"
-    echo "16. "
+    echo "16. Ventory"
     echo "17. Slack"
     echo "18. Helm"
     echo "19. Postman"
@@ -186,7 +186,7 @@ install_telegram_desktop() {
 # Function to install VLC
 install_vlc() {
     # Install software vlc using snap
-    sudo apt-get install vlc
+    sudo apt-get install vlc -y
 
 }
 
@@ -204,6 +204,13 @@ install_gparted() {
     # Install Pycharm
 #    sudo snap install pycharm-community --classic 
 #}
+
+install_ventory() {
+    # Install software vlc using snap
+    sudo wget https://github.com/ventoy/Ventoy/releases/download/v1.0.97/ventoy-1.0.97-linux.tar.gz
+    tar xzf ventoy-1.0.97-linux.tar.gz
+}
+
 
 # Function to install slack
 install_slack() {
@@ -250,6 +257,7 @@ install_all_applications() {
     install_vlc
     install_gparted
     #install_pycharm-community
+    install_ventory
     install_slack
     install_helm
     install_postman
@@ -276,7 +284,7 @@ while true; do
         13) install_telegram_desktop ;;
         14) install_vlc ;;
         15) install_gparted ;;
-        #16) install_pycharm-community ;;
+        16) install_ventory ;;
         17) install_slack ;;
         18) install_helm ;;
         19) install_postman ;;
