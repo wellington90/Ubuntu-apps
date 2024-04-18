@@ -1,8 +1,13 @@
 #!/bin/bash
 
+#pycharm-community
+
+#sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt update
+#sudo apt install -y boot-repair && boot-repair
 
 #sudo apt install libtesseract-dev
 #sudo apt install libtesseract-dev
+
 
 
 #-------------------------------------------------------
