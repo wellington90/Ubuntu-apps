@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#ADD
+
+#curl -sSLf https://github.com/aclap-dev/vdhcoapp/releases/latest/download/install.sh | bash
+
+
 # Function to display the menu
 display_menu() {
     clear
