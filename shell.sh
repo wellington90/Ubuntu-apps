@@ -4,6 +4,8 @@
 
 #curl -sSLf https://github.com/aclap-dev/vdhcoapp/releases/latest/download/install.sh | bash
 
+#sudo apt install net-tools
+
 
 # Function to display the menu
 display_menu() {
