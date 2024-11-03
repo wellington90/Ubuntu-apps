@@ -7,6 +7,10 @@
 #sudo apt install net-tools
 
 
+#sudo apt install inxi
+#sudo rmmod btusb
+#sudo modprobe btusb
+
 # Function to display the menu
 display_menu() {
     clear
