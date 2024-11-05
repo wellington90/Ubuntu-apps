@@ -6,6 +6,8 @@
 
 #sudo apt install net-tools
 
+#K3d
+#curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 #sudo apt install inxi
 #sudo rmmod btusb
