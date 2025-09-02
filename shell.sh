@@ -83,7 +83,7 @@ display_devops_menu() {
     echo ""
     echo -e "${BLUE}Select tools to install (e.g., 1 3 5):${NC}"
     echo -e "${YELLOW}1.${NC}  Docker & Docker Compose"
-    echo -e "${YELLOW}2.${NC}  Kubernetes (kubectl, kind)"
+    echo -e "${YELLOW}2.${NC}  Kubernetes (kubectl)"
     echo -e "${YELLOW}3.${NC}  K3d (Lightweight Kubernetes)"
     echo -e "${YELLOW}4.${NC}  Helm (Kubernetes Package Manager)"
     echo -e "${YELLOW}5.${NC}  Terraform (Infrastructure as Code)"
@@ -92,7 +92,7 @@ display_devops_menu() {
     echo -e "${YELLOW}8.${NC}  Azure CLI"
     echo -e "${YELLOW}9.${NC}  Google Cloud SDK"
     echo -e "${YELLOW}10.${NC} Kustomize"
-    echo -e "${YELLOW}11.${NC} Minikube"
+    echo -e "${YELLOW}11.${NC} Kind"
     echo -e "${YELLOW}12.${NC} Amazon Q CLI"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
@@ -236,8 +236,6 @@ install_docker_enhanced() {
 
 install_kubernetes() {
     log "Installing Kubernetes tools..."
-    curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.22.0/kind-linux-amd64
-    chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 }
@@ -286,10 +284,14 @@ install_kustomize() {
     sudo snap install kustomize
 }
 
-install_minikube() {
-    log "Installing Minikube..."
-    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+install_kind() {
+    log "Installing Kind..."
+    # For AMD64 / x86_64
+    [ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-amd64
+    # For ARM64
+    [ $(uname -m) = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-arm64
+    chmod +x ./kind
+    sudo mv ./kind /usr/local/bin/kind
 }
 
 install_amazon_q() {
@@ -490,7 +492,7 @@ handle_devops_menu() {
                 8) install_azure_cli ;;
                 9) install_gcloud ;;
                 10) install_kustomize ;;
-                11) install_minikube ;;
+                11) install_kind ;;
                 12) install_amazon_q ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
