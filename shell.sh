@@ -93,6 +93,7 @@ display_devops_menu() {
     echo -e "${YELLOW}9.${NC}  Google Cloud SDK"
     echo -e "${YELLOW}10.${NC} Kustomize"
     echo -e "${YELLOW}11.${NC} Minikube"
+    echo -e "${YELLOW}12.${NC} Amazon Q CLI"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -291,6 +292,14 @@ install_minikube() {
     sudo install minikube-linux-amd64 /usr/local/bin/minikube
 }
 
+install_amazon_q() {
+    log "Installing Amazon Q CLI..."
+    wget https://desktop-release.q.us-east-1.amazonaws.com/latest/amazon-q.deb
+    sudo dpkg -i amazon-q.deb
+    sudo apt-get install -f
+    rm -f amazon-q.deb
+}
+
 # Media & Communication
 install_chrome() {
     log "Installing Google Chrome..."
@@ -482,6 +491,7 @@ handle_devops_menu() {
                 9) install_gcloud ;;
                 10) install_kustomize ;;
                 11) install_minikube ;;
+                12) install_amazon_q ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
