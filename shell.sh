@@ -60,16 +60,13 @@ display_dev_menu() {
     echo ""
     echo -e "${BLUE}Select tools to install (e.g., 1 3 5):${NC}"
     echo -e "${YELLOW}1.${NC}  Visual Studio Code"
-    echo -e "${YELLOW}2.${NC}  PyCharm Community"
-    echo -e "${YELLOW}3.${NC}  Git + Git LFS"
-    echo -e "${YELLOW}4.${NC}  Python (venv, pip, dev tools)"
-    echo -e "${YELLOW}5.${NC}  Node.js & npm"
-    echo -e "${YELLOW}6.${NC}  Go Programming Language"
-    echo -e "${YELLOW}7.${NC}  Rust Programming Language"
-    echo -e "${YELLOW}8.${NC}  DBeaver CE (Database Tool)"
-    echo -e "${YELLOW}9.${NC}  Postman (API Testing)"
-    echo -e "${YELLOW}10.${NC} Insomnia (API Client)"
-    echo -e "${YELLOW}11.${NC} libtesseract-dev (OCR)"
+    echo -e "${YELLOW}2.${NC}  Git + Git LFS"
+    echo -e "${YELLOW}3.${NC}  Python (venv, pip, dev tools)"
+    echo -e "${YELLOW}4.${NC}  Node.js & npm"
+    echo -e "${YELLOW}5.${NC}  DBeaver CE (Database Tool)"
+    echo -e "${YELLOW}6.${NC}  Postman (API Testing)"
+    echo -e "${YELLOW}7.${NC}  Insomnia (API Client)"
+    echo -e "${YELLOW}8.${NC}  libtesseract-dev (OCR)"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -89,11 +86,9 @@ display_devops_menu() {
     echo -e "${YELLOW}5.${NC}  Terraform (Infrastructure as Code)"
     echo -e "${YELLOW}6.${NC}  Ansible (Configuration Management)"
     echo -e "${YELLOW}7.${NC}  AWS CLI & SAM CLI"
-    echo -e "${YELLOW}8.${NC}  Azure CLI"
-    echo -e "${YELLOW}9.${NC}  Google Cloud SDK"
-    echo -e "${YELLOW}10.${NC} Kustomize"
-    echo -e "${YELLOW}11.${NC} Kind"
-    echo -e "${YELLOW}12.${NC} Amazon Q CLI"
+    echo -e "${YELLOW}8.${NC}  Kustomize"
+    echo -e "${YELLOW}9.${NC}  Kind"
+    echo -e "${YELLOW}10.${NC} Amazon Q CLI"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -107,14 +102,12 @@ display_media_menu() {
     echo ""
     echo -e "${BLUE}Select applications to install (e.g., 1 3 5):${NC}"
     echo -e "${YELLOW}1.${NC}  Google Chrome"
-    echo -e "${YELLOW}2.${NC}  Firefox"
-    echo -e "${YELLOW}3.${NC}  VLC Media Player"
-    echo -e "${YELLOW}4.${NC}  Telegram Desktop"
-    echo -e "${YELLOW}5.${NC}  Slack"
-    echo -e "${YELLOW}6.${NC}  Discord"
-    echo -e "${YELLOW}7.${NC}  Zoom"
-    echo -e "${YELLOW}8.${NC}  OBS Studio"
-    echo -e "${YELLOW}9.${NC}  Iriun Webcam"
+    echo -e "${YELLOW}2.${NC}  VLC Media Player"
+    echo -e "${YELLOW}3.${NC}  Telegram Desktop"
+    echo -e "${YELLOW}4.${NC}  Slack"
+    echo -e "${YELLOW}5.${NC}  Zoom"
+    echo -e "${YELLOW}6.${NC}  OBS Studio"
+    echo -e "${YELLOW}7.${NC}  Iriun Webcam"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -453,16 +446,13 @@ handle_dev_menu() {
         for choice in "${choices[@]}"; do
             case $choice in
                 1) install_vscode ;;
-                2) install_pycharm ;;
-                3) install_git_enhanced ;;
-                4) install_python_dev ;;
-                5) install_nodejs ;;
-                6) install_go ;;
-                7) install_rust ;;
-                8) install_dbeaver ;;
-                9) install_postman ;;
-                10) install_insomnia ;;
-                11) install_tesseract ;;
+                2) install_git_enhanced ;;
+                3) install_python_dev ;;
+                4) install_nodejs ;;
+                5) install_dbeaver ;;
+                6) install_postman ;;
+                7) install_insomnia ;;
+                8) install_tesseract ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
@@ -489,11 +479,9 @@ handle_devops_menu() {
                 5) install_terraform ;;
                 6) install_ansible ;;
                 7) install_aws_cli ;;
-                8) install_azure_cli ;;
-                9) install_gcloud ;;
-                10) install_kustomize ;;
-                11) install_kind ;;
-                12) install_amazon_q ;;
+                8) install_kustomize ;;
+                9) install_kind ;;
+                10) install_amazon_q ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
@@ -514,14 +502,12 @@ handle_media_menu() {
         for choice in "${choices[@]}"; do
             case $choice in
                 1) install_chrome ;;
-                2) install_firefox ;;
-                3) install_vlc ;;
-                4) install_telegram ;;
-                5) install_slack ;;
-                6) install_discord ;;
-                7) install_zoom ;;
-                8) install_obs ;;
-                9) install_iriun ;;
+                2) install_vlc ;;
+                3) install_telegram ;;
+                4) install_slack ;;
+                5) install_zoom ;;
+                6) install_obs ;;
+                7) install_iriun ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
