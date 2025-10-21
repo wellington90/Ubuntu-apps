@@ -159,9 +159,7 @@ display_maintenance_menu() {
 # Development Tools
 install_vscode() {
     log "Installing Visual Studio Code..."
-    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft-archive-keyring.gpg > /dev/null
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
-    sudo apt update && sudo apt install -y code
+    sudo snap install code --classic
 }
 
 install_pycharm() {
