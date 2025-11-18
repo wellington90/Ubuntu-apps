@@ -4,6 +4,16 @@
 # Version: 2.0
 # Author: Enhanced by AI Assistant
 
+
+#add
+#set chrome default system
+#xdg-settings set default-web-browser com.google.Chrome.desktop
+
+#add code ao bash
+#echo "alias code='flatpak run com.visualstudio.code'" >> ~/.bashrc
+
+
+
 # Colors for better UI
 RED='\033[0;31m'
 GREEN='\033[0;32m'
