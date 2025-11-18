@@ -7,10 +7,20 @@
 
 #############################################################
 
+#Ubuntu
+#You can install Kiro CLI for Ubuntu using the .deb package.
+#To install Kiro CLI for Ubuntu, complete the following procedure.
+#Download Kiro CLI for Ubuntu.
+#wget https://desktop-release.q.us-east-1.amazonaws.com/latest/kiro-cli.deb
+#Install the package:
+#bash
+#sudo dpkg -i kiro-cli.deb
+#sudo apt-get install -f
+#----------------------------------
 #add
 #set chrome default system
 #xdg-settings set default-web-browser com.google.Chrome.desktop
-
+#----------------------------------
 #add code ao bash
 #echo "alias code='flatpak run com.visualstudio.code'" >> ~/.bashrc
 
