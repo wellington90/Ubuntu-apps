@@ -5,6 +5,8 @@
 # Author: Enhanced by AI Assistant
 
 
+#############################################################
+
 #add
 #set chrome default system
 #xdg-settings set default-web-browser com.google.Chrome.desktop
@@ -12,6 +14,8 @@
 #add code ao bash
 #echo "alias code='flatpak run com.visualstudio.code'" >> ~/.bashrc
 
+
+#############################################################
 
 
 # Colors for better UI
@@ -113,7 +117,7 @@ display_devops_menu() {
     echo -e "${YELLOW}7.${NC}  AWS CLI & SAM CLI"
     echo -e "${YELLOW}8.${NC}  Kustomize"
     echo -e "${YELLOW}9.${NC}  Kind"
-    echo -e "${YELLOW}10.${NC} Amazon Q CLI"
+    echo -e "${YELLOW}10.${NC} Kiro CLI"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -318,12 +322,12 @@ install_kind() {
     sudo mv ./kind /usr/local/bin/kind
 }
 
-install_amazon_q() {
-    log "Installing Amazon Q CLI..."
-    wget https://desktop-release.q.us-east-1.amazonaws.com/latest/amazon-q.deb
-    sudo dpkg -i amazon-q.deb
-    sudo apt-get install -f
-    rm -f amazon-q.deb
+install_kiro() {
+    log "Installing Kiro CLI..."
+    curl -fsSL https://cli.kiro.dev/install | bash
+    
+    
+    
 }
 
 # Media & Communication
@@ -510,7 +514,7 @@ handle_devops_menu() {
                 7) install_aws_cli ;;
                 8) install_kustomize ;;
                 9) install_kind ;;
-                10) install_amazon_q ;;
+                10) install_kiro ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
