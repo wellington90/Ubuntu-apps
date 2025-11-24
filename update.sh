@@ -82,14 +82,14 @@ display_devops_menu() {
     echo -e "${BLUE}Select tools to install (e.g., 1 3 5):${NC}"
     echo -e "${YELLOW}1.${NC}  Docker & Docker Compose"
     echo -e "${YELLOW}2.${NC}  Kubernetes (kubectl)"
-    echo -e "${YELLOW}3.${NC}  K3d (Lightweight Kubernetes)"
-    echo -e "${YELLOW}4.${NC}  Helm (Kubernetes Package Manager)"
-    echo -e "${YELLOW}5.${NC}  Terraform (Infrastructure as Code)"
-    echo -e "${YELLOW}6.${NC}  Ansible (Configuration Management)"
-    echo -e "${YELLOW}7.${NC}  AWS CLI & SAM CLI"
-    echo -e "${YELLOW}8.${NC}  Kustomize"
-    echo -e "${YELLOW}9.${NC}  Kind"
-    echo -e "${YELLOW}10.${NC} Amazon Q CLI"
+    
+    
+    echo -e "${YELLOW}3.${NC}  Terraform (Infrastructure as Code)"
+    echo -e "${YELLOW}4.${NC}  Ansible (Configuration Management)"
+    echo -e "${YELLOW}5.${NC}  AWS CLI & SAM CLI"
+    echo -e "${YELLOW}6.${NC}  Kustomize"
+    echo -e "${YELLOW}7.${NC}  Kind"
+    echo -e "${YELLOW}8.${NC}  Kiro CLI"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -107,8 +107,8 @@ display_media_menu() {
     echo -e "${YELLOW}3.${NC}  Telegram Desktop"
     echo -e "${YELLOW}4.${NC}  Slack"
     echo -e "${YELLOW}5.${NC}  Zoom"
-    echo -e "${YELLOW}6.${NC}  OBS Studio"
-    echo -e "${YELLOW}7.${NC}  Iriun Webcam"
+    
+    echo -e "${YELLOW}6.${NC}  Iriun Webcam"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -232,15 +232,7 @@ install_kubernetes() {
     chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 }
 
-install_k3d() {
-    log "Installing K3d..."
-    curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
-}
 
-install_helm() {
-    log "Installing Helm..."
-    sudo snap install helm --classic
-}
 
 install_terraform() {
     log "Installing Terraform..."
@@ -286,12 +278,15 @@ install_kind() {
     sudo mv ./kind /usr/local/bin/kind
 }
 
-install_amazon_q() {
-    log "Installing Amazon Q CLI..."
-    wget https://desktop-release.q.us-east-1.amazonaws.com/latest/amazon-q.deb
-    sudo dpkg -i amazon-q.deb
+install_kiro_cli() {
+    log "Installing Kiro CLI..."
+    #To install Kiro CLI for Ubuntu, complete the following procedure.
+    #Download Kiro CLI for Ubuntu.
+    wget https://desktop-release.q.us-east-1.amazonaws.com/latest/kiro-cli.deb
+    #Install the package:
+    sudo dpkg -i kiro-cli.deb
     sudo apt-get install -f
-    rm -f amazon-q.deb
+    rm -f kiro-cli.deb
 }
 
 # Media & Communication
@@ -332,10 +327,6 @@ install_zoom() {
     sudo apt install -y /tmp/zoom_amd64.deb
 }
 
-install_obs() {
-    log "Installing OBS Studio..."
-    sudo snap install obs-studio
-}
 
 install_iriun() {
     log "Installing Iriun Webcam..."
@@ -473,14 +464,12 @@ handle_devops_menu() {
             case $choice in
                 1) install_docker_enhanced ;;
                 2) install_kubernetes ;;
-                3) install_k3d ;;
-                4) install_helm ;;
-                5) install_terraform ;;
-                6) install_ansible ;;
-                7) install_aws_cli ;;
-                8) install_kustomize ;;
-                9) install_kind ;;
-                10) install_amazon_q ;;
+                3) install_terraform ;;
+                4) install_ansible ;;
+                5) install_aws_cli ;;
+                6) install_kustomize ;;
+                7) install_kind ;;
+                8) install_kiro_cli ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
@@ -505,8 +494,7 @@ handle_media_menu() {
                 3) install_telegram ;;
                 4) install_slack ;;
                 5) install_zoom ;;
-                6) install_obs ;;
-                7) install_iriun ;;
+                6) install_iriun ;;
                 0) return ;;
                 *) error "Invalid choice: $choice" ;;
             esac
