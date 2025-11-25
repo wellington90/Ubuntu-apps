@@ -132,6 +132,7 @@ display_system_menu() {
     echo -e "${YELLOW}9.${NC}  Net-tools"
     echo -e "${YELLOW}10.${NC} Inxi (System Information)"
     echo -e "${YELLOW}11.${NC} Timeshift (System Backup)"
+    echo -e "${YELLOW}12.${NC} DownloadHelper (Video Downloader)"
     echo -e "${YELLOW}0.${NC}  Back to main menu"
     echo ""
 }
@@ -277,20 +278,18 @@ install_kiro() {
 
 install_eksctl() {
     log "Installing eksctl..."
-    # for ARM systems, set ARCH to: `arm64`, `armv6` or `armv7`
     ARCH=amd64
     PLATFORM=$(uname -s)_$ARCH
-
     curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
-
-    # (Optional) Verify checksum
     curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
-
     tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
-
     sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm /tmp/eksctl
 }
 
+install_telegram() {
+    log "Installing Telegram Desktop..."
+    sudo snap install telegram-desktop
+}
 # Media & Communication
 install_chrome() {
     log "Installing Google Chrome..."
@@ -308,12 +307,6 @@ install_vlc() {
     sudo apt install -y vlc
 }
 
-install_telegram() {
-    log "Installing Telegram Desktop..."
-    wget -O /tmp/telegram.tar.xz https://telegram.org/dl/desktop/linux
-    sudo tar -xJf /tmp/telegram.tar.xz -C /opt
-    sudo ln -sf /opt/Telegram/Telegram /usr/local/bin/telegram
-}
 
 install_slack() {
     log "Installing Slack..."
@@ -401,6 +394,11 @@ install_inxi() {
 install_timeshift() {
     log "Installing Timeshift..."
     sudo apt install -y timeshift
+}
+
+install_downloadhelper() {
+    log "Installing DownloadHelper..."
+    curl -sSLf https://github.com/aclap-dev/vdhcoapp/releases/latest/download/install.sh | bash
 }
 
 # Maintenance Functions
@@ -521,6 +519,7 @@ handle_system_menu() {
                 4) install_testdisk ;;
                 5) install_htop ;;
                 6) install_neofetch ;;
+                12) install_downloadhelper ;;
                 7) install_tree ;;
                 8) install_curl_wget ;;
                 9) install_net_tools ;;
