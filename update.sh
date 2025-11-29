@@ -274,6 +274,9 @@ install_kind() {
 install_kiro() {
     log "Installing Kiro CLI..."
     curl -fsSL https://cli.kiro.dev/install | bash
+    ls ~/.local/bin | grep kiro
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
 }
 
 install_eksctl() {
